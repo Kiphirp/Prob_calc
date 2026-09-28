@@ -1,0 +1,57 @@
+# Хочу добавить стирание консоли после Enter
+def Prob_check(*args):
+    for x in args:
+        if x > 1:
+            print('Вероятность не может быть больше еденицы!')
+            return False 
+    return True
+def Prob_at_least():
+    p = float(input(('Введите вероятность успеха в одной конкретной попытке: ')))
+    n = int(input('Введите кол-во независимых испытаний: '))
+    if not Formula(p,n):
+            print('Все значения должны быть больше нуля!')
+    elif not Prob_check(p):
+        pass
+    else:
+        print('Вероятность того, что случайное событие произойдет хотя бы один раз равна:', (1-((1-p)**n)))
+    
+def Formula(*args):
+    for x in args:
+        if x < 0:
+            return False
+    return True
+ 
+def Prob_easy():
+    m = int(input('Введите число благоприятных исходов: '))
+    n = int(input('Общее число всех возможных исходов: '))
+    if not Formula(m,n):
+            print('Все значения должны быть больше нуля!')
+        
+    else: print('Вероятность равна:', m/n)
+    
+def Start():
+    start_inf0 = 'Выберети режим работы\n0 - Выход\n1 - Обычная вероятность(m/n)\n' 
+    start_inf1 = '2 - Вероятность того, что случайное событие произойдет хотя бы один раз\n'
+    start_inf = start_inf0 + start_inf1
+    i = int(input(start_inf))
+
+    if i == 0:
+        exit()
+    elif i == 1:
+        Prob_easy()
+    elif i == 2:
+        Prob_at_least()
+        
+        
+Start()
+while True:
+    input("Нажмите Enter чтобы продолжить")
+    
+    try:
+        Start()
+        
+            
+    except ValueError:
+        print('Введите целое число либо введите число через "."')
+    except ZeroDivisionError:
+        print('Число должно быть больше  нуля!')
