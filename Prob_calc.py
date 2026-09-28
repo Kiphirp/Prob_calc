@@ -1,6 +1,13 @@
 from os import system
 
-def Prob_mult():
+def Enter():
+    input("Нажмите Enter чтобы продолжить")
+    system('cls')
+        
+def Error():
+    print('Некорретное число, попробуйте снова!')
+
+def Prob_mult(): # Умножение вероятностей
     i = int(input('Выберите режим умножения:\n1 - Независимыe события\n2 - Зависисые события\n'))
     if i == 1:
         A = float(input('Введите вероятность события А: '))
@@ -13,7 +20,7 @@ def Prob_mult():
         
         print('Вероятность, что оба события произойдут равна:', A*(B))
     else:
-        print('Некорретное число, попробуйте снова!')
+        Error()
 def Prob_add(): #Сложение вреоятностей
     i = int(input('Выберите режим сложения:\n1 - Несовместные события\n2 - Совместные события\n'))
     if i == 1:
@@ -24,12 +31,22 @@ def Prob_add(): #Сложение вреоятностей
             if A+B > 1: 
                 print('У вас где-то ошибка!(Вероятность не может быть больше еденицы!)')
     elif i == 2:
-        A = float(input('Введите вероятность события А: '))
-        B = float(input('Введите вероятность события B: '))
-        if Formula(A,B) and Prob_check(A,B):
-            print('Верятность, произойдёт одно из событий равна:', A + B -(A * B))
+        i2 = int(input('1 - Независмиые события\n2- Зависимые события'))
+        if i2 == 1:
+            A = float(input('Введите вероятность события А: '))
+            B = float(input('Введите вероятность события B: '))
+            if Formula(A,B) and Prob_check(A,B):
+                print('Верятность, произойдёт одно из событий равна:', A + B -(A * B))
+        elif i2 == 2:
+            A = float(input('Введите вероятность события А: '))
+            B = float(input('Введите вероятность события B: '))
+            A0B = float(input('Введите вероятность события, что А и Б произошли одновременно(P(A∩B)): '))
+            if Formula(A,B,A0B) and Prob_check(A,B,A0B):
+                print('Верятность, произойдёт одно из событий равна:', ((A + B) - A0B))
+        else:
+            Error()
     else:
-        print('Некорретное число, попробуйте снова!')
+        Error()
 def Prob_check(*args): # Проверка чтобы вероятности не были больше единицы
     for x in args:
         if x > 1:
@@ -57,8 +74,8 @@ def Prob_easy(): # Определние вероятностей
     
 def Start(): # Стартовая функция меню и всё такое
     start_inf1 = 'Выберети режим работы\n0 - Выход\n1 - Обычная вероятность(m/n)\n' 
-    start_inf2 = '2 - Сложение вероятностей\n'
-    start_inf3 = '3 - Умножение вероятностей\n'
+    start_inf2 = '2 - Умножение вероятностей\n'
+    start_inf3 = '3 - Сложение вероятностей\n'
     start_inf4 = '4 - Вероятность того, что случайное событие произойдет хотя бы один раз\n'
     start_inf = start_inf1 + start_inf2 + start_inf3 + start_inf4
     i = int(input(start_inf))
@@ -68,20 +85,27 @@ def Start(): # Стартовая функция меню и всё такое
     elif i == 1:
         Prob_easy()
     elif i == 2:
-        Prob_add()
-    elif i == 3:
         Prob_mult()
+    elif i == 3:
+        Prob_add()
     elif i == 4:
         Prob_at_least()
-Start() # Начало основного кода
+
+
 while True:
-    input("Нажмите Enter чтобы продолжить")
-    system('cls')
     try:
+        while True:
+            Start() # Начало основного кода
+            break
+        Enter()
         Start()
         
-            
+        
+    
     except ValueError: # Проверки всякие на ошибки, чтоб программа не падала!
         print('Введите целое число либо введите число через "."')
+        Enter()
     except ZeroDivisionError:
         print('Число должно быть больше  нуля!')
+        Enter()
+            
