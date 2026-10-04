@@ -17,23 +17,15 @@ def Enter():
     input("Нажмите Enter чтобы продолжить")
     system('cls')
         
-def Error():
-    print('Некорректное число, попробуйте снова!')
 
-def Prob_mult(): # Умножение вероятностей
-    i = int(input('Выберите режим умножения:\n1 - Независимыe события\n2 - Зависисые события\n'))
-    if i == 1:
-        A = float(input('Введите вероятность события А: '))
-        B = float(input('Введите вероятность события B: '))
-        if Formula(A,B) and Prob_check(A,B):
-            print('Вероятность, что оба события произойдут равна:', A * B)
-    elif i == 2:
-        A = float(input('Введите вероятность события А: '))
-        B = float(input('Введите условную вероятность события B|A: '))
-        if Formula(A,B) and Prob_check(A,B):
-            print('Вероятность, что оба события произойдут равна: ', A*(B))
-    else:
-        Error()
+
+def Prob_mult(A,B): # Умножение вероятностей
+        if not Formula(A,B):
+            return 'Error:belowzero' 
+        if not Prob_check(A,B):
+            return 'Error:higher1'
+        return A*B  
+
 def Prob_add(): #Сложение вреоятностей
     i = int(input('Выберите режим сложения:\n1 - Несовместные события\n2 - Совместные события\n'))
     if i == 1:
@@ -86,7 +78,7 @@ def Prob_easy(m,n): # Определние вероятностей
         if m<=n:
             return m/n
         else:
-            return 'Error:notsatisfy'
+            return 'Error:notsatisfy_easy'
 #            print('Ваши числа не выполняют условие m <= n')
     return 'Error:belowzero'
 
