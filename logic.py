@@ -1,32 +1,22 @@
-from os import system
-# raise
 from math import comb
 
-def Prob_Bernoulli():
-    n = int(input('Введите общее число независимых испытаний: '))
-    k = int(input('Введите число успехов события: '))
-    p = float(input('Введите вероятность успеха события в каждом отдельном испытании: '))
-    if Formula(n,k,p) and Prob_check(p):
-        if k <= n:
-            print('Вероятность того, что в серии из n независимых испытаний событие наступит ровно k раз равна: ', end='')
-            print((comb(n,k))*(p**k)*((1-p)**(n-k)))
-        else:
-            print('Ваши числа не выполняют условия k <= n!')
-        
-def Enter():
-    input("Нажмите Enter чтобы продолжить")
-    system('cls')
-        
+def Prob_Bernoulli(n,k,p):
+    if not Formula(n,k,p):
+        return 'Error:belowzero' 
+    if not Prob_check(p):
+        return 'Error:higher1'
+    if k > n:
+        return 'Error:notsatisfy_Bernoulli'
+    return (comb(n,k))*(p**k)*((1-p)**(n-k))
 
-
-def Prob_mult(A,B): # Умножение вероятностей
+def Prob_mult(A,B): 
     if not Formula(A,B):
         return 'Error:belowzero' 
     if not Prob_check(A,B):
         return 'Error:higher1'
     return A*B  
 
-def Prob_add_incomp(A,B): #Сложение вреоятностей
+def Prob_add_incomp(A,B):
     if not Formula(A,B):
         return 'Error:belowzero' 
     if not Prob_check(A,B):
@@ -40,8 +30,7 @@ def Prob_add_indep(A,B):
         return 'Error:belowzero' 
     if not Prob_check(A,B):
         return 'Error:higher1'
-    if Formula(A,B) and Prob_check(A,B):
-         return A + B -(A * B)
+    return A + B -(A * B)
         
 def Prob_add_dep(A,B,A0B):
     if not Formula(A,B,A0B):
@@ -52,35 +41,31 @@ def Prob_add_dep(A,B,A0B):
         return 'Error:higher1_add'
     if ((A + B) - A0B) < 0:
         return 'Error:belowzero_add'
-    if Formula(A,B,A0B) and Prob_check(A,B,A0B):
-        return (A + B) - A0B
+    return (A + B) - A0B
         
-def Prob_check(*args): # Проверка чтобы вероятности не были больше единицы
+def Prob_check(*args): 
     for x in args:
         if x > 1:
             return False 
     return True
-def Prob_at_least(): # Вероятность хотя бы одного в n попыток
-    p = float(input(('Введите вероятность успеха события в каждом отдельном испытании: ')))
-    n = int(input('Введите кол-во независимых испытаний: '))
-    if Formula(p,n) and Prob_check(p):
-            print('Вероятность того, что случайное событие произойдет хотя бы один раз равна:', (1-((1-p)**n)))
 
+def Prob_at_least(p,n): 
+    if not Formula(p,n):
+        return 'Error:belowzero' 
+    if not Prob_check(p):
+        return 'Error:higher1'
+    return (1-((1-p)**n))
 
-def Formula(*args): # Проверка чтобы все значения были не отрицательными
+def Formula(*args):
     for x in args:
         if x < 0:
-#             print('Все значения должны быть >= нуля!')
             return False
     return True
 
-def Prob_easy(m,n): # Определние вероятностей 
+def Prob_easy(m,n): 
     if Formula(m,n):
         if m<=n:
             return m/n
         else:
             return 'Error:notsatisfy_easy'
-#            print('Ваши числа не выполняют условие m <= n')
     return 'Error:belowzero'
-
-            
