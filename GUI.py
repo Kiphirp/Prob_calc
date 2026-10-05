@@ -6,7 +6,28 @@ from logic import Prob_mult
 from logic import Prob_add_incomp
 from logic import Prob_add_indep
 from logic import Prob_add_dep
+from logic import Prob_at_least
+from logic import Prob_Bernoulli
 
+def full_Prob_Bernoulli():
+    try:
+        n = int(entry_Bernoulli_n.get())
+        k = int(entry_Bernoulli_k.get())
+        p = float(entry_Bernoulli_p.get())
+        result = Prob_Bernoulli(n,k,p)
+        if Error_check(result):
+            label_Bernoulli_result.config(text='Вероятность того, что в серии из n независимых испытаний событие наступит ровно k раз равна:\n' + str(result))
+    except ValueError: 
+        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "."')
+def full_Prob_at_least():
+    try:
+        p = float(entry_at_least_p.get())
+        n = int(entry_at_least_n.get())
+        result = Prob_at_least(p,n)
+        if Error_check(result):
+            label_at_least_result.config(text='Вероятность того, что случайное событие произойдет хотя бы один раз равна:\n'+ str(result))
+    except ValueError: 
+        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "."')
 def full_Prob_add_dep():
     try:
         A = float(entry_add_depA.get())
@@ -111,6 +132,8 @@ def Error_check(result):
     elif result == 'Error:belowzero_add':
         messagebox.showerror('Ошибка','Вероятность при сложении не может быть меньше нуля')
         return False
+    elif result == 'Error:notsatisfy_Bernoulli':
+        messagebox.showerror('Ошибка','Ваши числа не выполняют условие k <= n')
     return True
 def full_Prob_easy():
     try:
@@ -150,23 +173,27 @@ def dep_visual():
     label_dep_result.pack()
 
 root = Tk()
-root.geometry('1000x500')
+root.geometry('790x350')
 root.resizable(width = False, height = False)
 root.title('Калькулятор вероятностей')
 root.iconbitmap('Dice.ico') 
 
 tab_control = ttk.Notebook(root)
-tab_control.pack()
+tab_control.pack(fill='both', expand=True)
 
 tab_main = ttk.Frame(tab_control)
 tab1 = ttk.Frame(tab_control)
 tab2 = ttk.Frame(tab_control)
 tab3 = ttk.Frame(tab_control)
+tab4 = ttk.Frame(tab_control)
+tab5 = ttk.Frame(tab_control)
 
 tab_control.add(tab_main, text = 'Главная')
 tab_control.add(tab1, text = 'Простая вероятность')
 tab_control.add(tab2, text = 'Умножение вероятностей')
 tab_control.add(tab3, text = 'Сложение вероятностей')
+tab_control.add(tab4, text = 'Вероятность хотя бы n раз')
+tab_control.add(tab5, text = 'Вероятность k успехов из n')
 
 label_Prob_easy_m = Label(tab1, text='Введите число благоприятных исходов: ')
 label_Prob_easy_m.pack()
@@ -189,8 +216,6 @@ label_Prob_easy_result = Label(tab1, text = 'Вероятность равна:'
 label_Prob_easy_result.pack()
 
 label_tab2 = Label(tab2, text='Выберите режим вычисления:').pack()
-
-
 
 
 var = IntVar(value = 1)
@@ -222,6 +247,10 @@ entry_dep_Prob_multiB = Entry(frame_dep_visual)
 btn_dep_visual = Button(frame_dep_visual, text='Вычислить', command=full_Prob_mult_dep)
 label_dep_result = Label(frame_dep_visual, text='Вероятность равна:')
 
+label_add_incomp = Label(tab3, text='Выберите режим вычисления:')
+label_add_incomp.pack()
+
+
 var_add = IntVar(value=1)
 
 radbtn_add_incomp = Radiobutton(tab3, variable=var_add, value=1, text='Несовместные события', takefocus=0, command=Prob_add_incomp_visual).pack()
@@ -229,6 +258,7 @@ radbtn_add_comp_indep = Radiobutton(tab3, variable=var_add, value=2, text='Со�
 radbtn_add_comp_dep = Radiobutton(tab3, variable=var_add, value=3, text='Совместные и зависимые события', takefocus=0, command=Prob_add_dep_visual).pack()
 
 frame_add_incomp = Frame(tab3)
+
 label_add_incompA = Label(frame_add_incomp, text='Введите вероятность события А: ')
 entry_add_incompA = Entry(frame_add_incomp)
 label_add_incompB = Label(frame_add_incomp, text='Введите вероятность события B: ')
@@ -262,5 +292,49 @@ entry_add_depA0B = Entry(frame_add_dep)
 btn_add_dep = Button(frame_add_dep, text='Вычислить', command=full_Prob_add_dep)
 label_add_dep_result = Label(frame_add_dep, text='Верятность, что произойдёт одно из событий равна: ')
 
-root.mainloop()
+frame_at_least = Frame(tab4)
+label_at_leat_p = Label(frame_at_least, text='Введите вероятность успеха события в каждом отдельном испытании: ')
+entry_at_least_p = Entry(frame_at_least)
+label_at_least_n = Label(frame_at_least, text='Введите кол-во независимых испытаний: ')
+entry_at_least_n = Entry(frame_at_least)
+btn_at_least = Button(frame_at_least, text='Вычислить', command=full_Prob_at_least)
+label_at_least_result = Label(frame_at_least, text='Вероятность того, что случайное событие произойдет хотя бы один раз равна:')
 
+frame_at_least.pack()
+label_at_leat_p.pack()
+entry_at_least_p.pack()
+label_at_least_n.pack()
+entry_at_least_n.pack()
+btn_at_least.pack()
+label_at_least_result.pack()
+
+frame_Bernoulli = Frame(tab5)
+label_Bernoulli_n = Label(frame_Bernoulli, text='Введите общее число независимых испытаний: ')
+entry_Bernoulli_n = Entry(frame_Bernoulli)
+label_Bernoulli_k = Label(frame_Bernoulli, text='Введите число успехов события: ')
+entry_Bernoulli_k = Entry(frame_Bernoulli)
+label_Bernoulli_p = Label(frame_Bernoulli, text='Введите вероятность успеха события в каждом отдельном испытании: ') 
+entry_Bernoulli_p = Entry(frame_Bernoulli)
+btn_Bernoulli = Button(frame_Bernoulli, text='Вычислить', command=full_Prob_Bernoulli)
+label_Bernoulli_result = Label(frame_Bernoulli, text='Вероятность того, что в серии из n независимых испытаний событие наступит ровно k раз равна: ')
+
+
+frame_Bernoulli.pack()
+label_Bernoulli_n.pack()
+entry_Bernoulli_n.pack()
+label_Bernoulli_k.pack()
+entry_Bernoulli_k.pack()
+label_Bernoulli_p.pack()
+entry_Bernoulli_p.pack()
+btn_Bernoulli.pack()
+label_Bernoulli_result.pack()
+
+
+title = Label(tab_main, text='Калькулятор вероятностей', font =('Arial', 16, 'bold'))
+title.pack(pady=20)
+
+Name = Label(tab_main,font=('Times New Roman', 16),text='Для индивидулаьного проекта разработал:\nученик 9 "Б" класса\nМБОУ СОШ №2\nНовиков Артём\n')
+Name.pack()
+
+
+root.mainloop()
