@@ -20,43 +20,44 @@ def Enter():
 
 
 def Prob_mult(A,B): # Умножение вероятностей
-        if not Formula(A,B):
-            return 'Error:belowzero' 
-        if not Prob_check(A,B):
-            return 'Error:higher1'
-        return A*B  
+    if not Formula(A,B):
+        return 'Error:belowzero' 
+    if not Prob_check(A,B):
+        return 'Error:higher1'
+    return A*B  
 
-def Prob_add(): #Сложение вреоятностей
-    i = int(input('Выберите режим сложения:\n1 - Несовместные события\n2 - Совместные события\n'))
-    if i == 1:
-        A = float(input('Введите вероятность события А: '))
-        B = float(input('Введите вероятность события B: '))
-        if A+B > 1: 
-                print('У вас где-то ошибка!(Вероятность не может быть больше единицы!)')
-                if (Formula(A,B) and Prob_check(A,B)): 
-                    print('Верятность, что произойдёт одно из событий равна:', A+B)
-
-    elif i == 2:
-        i2 = int(input('1 - Независимые события\n2- Зависимые события'))
-        if i2 == 1:
-            A = float(input('Введите вероятность события А: '))
-            B = float(input('Введите вероятность события B: '))
-            if Formula(A,B) and Prob_check(A,B):
-                print('Вероятность, произойдёт одно из событий равна:', A + B -(A * B))
-        elif i2 == 2:
-            A = float(input('Введите вероятность события А: '))
-            B = float(input('Введите вероятность события B: '))
-            A0B = float(input('Введите вероятность события, что А и Б произошли одновременно(P(A∩B)): '))
-            if Formula(A,B,A0B) and Prob_check(A,B,A0B):
-                print('Верятность, произойдёт одно из событий равна:', ((A + B) - A0B))
-        else:
-            Error()
-    else:
-        Error()
+def Prob_add_incomp(A,B): #Сложение вреоятностей
+    if not Formula(A,B):
+        return 'Error:belowzero' 
+    if not Prob_check(A,B):
+        return 'Error:higher1'
+    if A+B > 1: 
+        return 'Error:higher1_add'
+    return A+B
+    
+def Prob_add_indep(A,B):
+    if not Formula(A,B):
+        return 'Error:belowzero' 
+    if not Prob_check(A,B):
+        return 'Error:higher1'
+    if Formula(A,B) and Prob_check(A,B):
+         return A + B -(A * B)
+        
+def Prob_add_dep(A,B,A0B):
+    if not Formula(A,B,A0B):
+        return 'Error:belowzero' 
+    if not Prob_check(A,B,A0B):
+        return 'Error:higher1'
+    if ((A + B) - A0B) > 1:
+        return 'Error:higher1_add'
+    if ((A + B) - A0B) < 0:
+        return 'Error:belowzero_add'
+    if Formula(A,B,A0B) and Prob_check(A,B,A0B):
+        return (A + B) - A0B
+        
 def Prob_check(*args): # Проверка чтобы вероятности не были больше единицы
     for x in args:
         if x > 1:
-            print('Вероятность не может быть больше единицы!')
             return False 
     return True
 def Prob_at_least(): # Вероятность хотя бы одного в n попыток
