@@ -37,6 +37,8 @@ def Prob_add_dep(A,B,A0B):
         return 'Error:belowzero' 
     if not Prob_check(A,B,A0B):
         return 'Error:higher1'
+    if A<A0B or B<A0B:
+        return 'Error:notsatisfy_add_dep'
     if ((A + B) - A0B) > 1:
         return 'Error:higher1_add'
     if ((A + B) - A0B) < 0:
@@ -54,7 +56,7 @@ def Prob_at_least(p,n):
         return 'Error:belowzero' 
     if not Prob_check(p):
         return 'Error:higher1'
-    return 1 - binom.pmf(0,n,p)
+    return (1-((1-p)**n))
 
 def Formula(*args):
     for x in args:
