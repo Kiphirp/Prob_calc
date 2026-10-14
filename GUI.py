@@ -8,6 +8,15 @@ from logic import Prob_add_indep
 from logic import Prob_add_dep
 from logic import Prob_at_least
 from logic import Prob_Bernoulli
+import sys
+import os
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 def set_light():
     set_appearance_mode('light')
@@ -140,6 +149,10 @@ def Error_check(result):
         return False
     elif result == 'Error:notsatisfy_Bernoulli':
         messagebox.showerror('Ошибка','Ваши числа не выполняют условие k <= n')
+        return False
+    elif result == 'Error:notsatisfy_add_dep':
+        messagebox.showerror('Ошибка','Пересечение P(A∩B) не может быть больше P(A) или P(B)!')
+        return False
     return True
 def full_Prob_easy():
     try:
@@ -182,7 +195,7 @@ root = CTk()
 root.geometry('940x400')
 root.resizable(width = False, height = False)
 root.title('Калькулятор вероятностей')
-root.iconbitmap('Dice.ico') 
+root.iconbitmap(resource_path('Dice.ico'))
 set_appearance_mode("light")
 
 tab_control = CTkTabview(root)
