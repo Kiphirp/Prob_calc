@@ -1,4 +1,4 @@
-from scipy.stats import binom 
+from math import comb
 
 def Prob_Bernoulli(n,k,p):
     if not Formula(n,k,p):
@@ -7,7 +7,7 @@ def Prob_Bernoulli(n,k,p):
         return 'Error:higher1'
     if k > n:
         return 'Error:notsatisfy_Bernoulli'
-    return binom.pmf(k,n,p)
+    return (comb(n,k))*(p**k)*((1-p)**(n-k))
 
 def Prob_mult(A,B): 
     if not Formula(A,B):
