@@ -11,6 +11,7 @@ from logic import Prob_Bernoulli
 import sys
 import os
 
+
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
@@ -18,6 +19,9 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
 
+def get_float(num):
+    num_float = num.get().replace(',','.')
+    return float(num_float)
 def set_light():
     set_appearance_mode('light')
 
@@ -28,50 +32,50 @@ def full_Prob_Bernoulli():
     try:
         n = int(entry_Bernoulli_n.get())
         k = int(entry_Bernoulli_k.get())
-        p = float(entry_Bernoulli_p.get())
+        p = get_float(entry_Bernoulli_p)
         result = Prob_Bernoulli(n,k,p)
         if Error_check(result):
             label_Bernoulli_result.configure(text='Вероятность того, что в серии из n независимых испытаний событие наступит ровно k раз равна:\n' + str(result))
     except ValueError: 
-        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "."')
+        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "." или ","')
 def full_Prob_at_least():
     try:
-        p = float(entry_at_least_p.get())
+        p = get_float(entry_at_least_p)
         n = int(entry_at_least_n.get())
         result = Prob_at_least(p,n)
         if Error_check(result):
             label_at_least_result.configure(text='Вероятность того, что случайное событие произойдет хотя бы один раз равна:\n'+ str(result))
     except ValueError: 
-        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "."')
+        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "." или ","')
 def full_Prob_add_dep():
     try:
-        A = float(entry_add_depA.get())
-        B = float(entry_add_depB.get())
-        A0B = float(entry_add_depA0B.get())
+        A = get_float(entry_add_depA)
+        B = get_float(entry_add_depB)
+        A0B = get_float(entry_add_depA0B)
         result = Prob_add_dep(A,B,A0B)
         if Error_check(result):
             label_add_dep_result.configure(text='Вероятность, что произойдёт одно из событий равна: ' + str(result))
     except ValueError: 
-        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "."')
+        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "." или ","')
 
 def full_Prob_add_indep():
     try:
-        A = float(entry_add_indepA.get())
-        B = float(entry_add_indepB.get())
+        A = get_float(entry_add_indepA)
+        B = get_float(entry_add_indepB)
         result = Prob_add_indep(A,B)
         if Error_check(result):
             label_add_indep_result.configure(text='Вероятность, что произойдёт одно из событий равна: '+ str(result))
     except ValueError: 
-        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "."')
+        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "." или ","')
 def full_Prob_add_incomp():
     try:
-        A = float(entry_add_incompA.get())
-        B = float(entry_add_incompB.get())
+        A = get_float(entry_add_incompA)
+        B = get_float(entry_add_incompB)
         result = Prob_add_incomp(A,B)
         if Error_check(result):
             label_add_incomp_result.configure(text='Вероятность, что произойдёт одно из событий равна: '+ str(result))
     except ValueError: 
-        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "."')
+        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "." или ","')
 def forget_add():
     if frame_add_incomp.winfo_ismapped():
         frame_add_incomp.pack_forget()
@@ -113,23 +117,23 @@ def Prob_add_incomp_visual():
 
 def full_Prob_mult_indep():
     try:
-        A = float(entry_indep_Prob_multiA.get())
-        B = float(entry_indep_Prob_multiB.get())
+        A = get_float(entry_indep_Prob_multiA)
+        B = get_float(entry_indep_Prob_multiB)
         result = Prob_mult(A,B)
         if Error_check(result):
             label_indep_result.configure(text='Вероятность равна: ' + str(result))
     except ValueError: 
-        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "."')
+        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "." или ","')
         
 def full_Prob_mult_dep():
     try:
-        A = float(entry_dep_Prob_multiA.get())
-        B = float(entry_dep_Prob_multiB.get())
+        A = get_float(entry_dep_Prob_multiA)
+        B = get_float(entry_dep_Prob_multiB)
         result = Prob_mult(A,B)
         if Error_check(result):
             label_dep_result.configure(text='Вероятность равна: ' + str(result))
     except ValueError:
-        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "."')
+        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "." или ","')
         
 def Error_check(result):
     if result == 'Error:belowzero':
@@ -164,7 +168,7 @@ def full_Prob_easy():
     except ZeroDivisionError:
         messagebox.showerror('Ошибка', 'Нельзя делить на ноль!')
     except ValueError: 
-        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "."')
+        messagebox.showerror('Ошибка', 'Введите целое число либо введите число через "." или ","')
 
 def forget():
     if frame_indep_visual.winfo_ismapped():
