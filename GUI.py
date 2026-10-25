@@ -92,7 +92,7 @@ def Prob_add_dep_visual():
     entry_add_depB.pack()
     label_add_depA0B.pack()
     entry_add_depA0B.pack()
-    btn_add_dep.pack()
+    btn_add_dep.pack(pady=10)
     label_add_dep_result.pack()
 
 def Prob_add_indep_visual():
@@ -102,7 +102,7 @@ def Prob_add_indep_visual():
     entry_add_indepA.pack()
     label_add_indepB.pack()
     entry_add_indepB.pack()
-    btn_add_indep.pack()
+    btn_add_indep.pack(pady=10)
     label_add_indep_result.pack()
 
 def Prob_add_incomp_visual():
@@ -112,7 +112,7 @@ def Prob_add_incomp_visual():
     entry_add_incompA.pack()
     label_add_incompB.pack()
     entry_add_incompB.pack()
-    btn_add_incomp.pack()
+    btn_add_incomp.pack(pady=10)
     label_add_incomp_result.pack()
 
 def full_Prob_mult_indep():
@@ -183,7 +183,7 @@ def indep_visual():
     entry_indep_Prob_multiA.pack()
     label_indep_Prob_multiB.pack()
     entry_indep_Prob_multiB.pack()
-    btn_indep_visual.pack()
+    btn_indep_visual.pack(pady=10)
     label_indep_result.pack()
 def dep_visual():
     forget()
@@ -192,7 +192,7 @@ def dep_visual():
     entry_dep_Prob_multiA.pack()
     label_dep_Prob_multiB.pack()
     entry_dep_Prob_multiB.pack()
-    btn_dep_visual.pack()
+    btn_dep_visual.pack(pady=10)
     label_dep_result.pack()
 
 root = CTk()
@@ -226,7 +226,7 @@ enter_Prob_easy_n = CTkEntry(tab1)
 enter_Prob_easy_n.pack()
 
 button_Prob_easy = CTkButton(tab1, text='Вычислить', command = full_Prob_easy)
-button_Prob_easy.pack()
+button_Prob_easy.pack(pady=10)
 
 
 
@@ -254,7 +254,7 @@ label_indep_Prob_multiA.pack()
 entry_indep_Prob_multiA.pack()
 label_indep_Prob_multiB.pack()
 entry_indep_Prob_multiB.pack()
-btn_indep_visual.pack()
+btn_indep_visual.pack(pady=10)
 label_indep_result.pack()
 
 frame_dep_visual = CTkFrame(tab2)
@@ -289,7 +289,7 @@ label_add_incompA.pack()
 entry_add_incompA.pack()
 label_add_incompB.pack()
 entry_add_incompB.pack()
-btn_add_incomp.pack()
+btn_add_incomp.pack(pady=10)
 label_add_incomp_result.pack()
 
 frame_add_indep = CTkFrame(tab3)
@@ -323,7 +323,7 @@ label_at_leat_p.pack()
 entry_at_least_p.pack()
 label_at_least_n.pack()
 entry_at_least_n.pack()
-btn_at_least.pack()
+btn_at_least.pack(pady=10)
 label_at_least_result.pack()
 
 frame_Bernoulli = CTkFrame(tab5)
@@ -344,7 +344,7 @@ label_Bernoulli_k.pack()
 entry_Bernoulli_k.pack()
 label_Bernoulli_p.pack()
 entry_Bernoulli_p.pack()
-btn_Bernoulli.pack()
+btn_Bernoulli.pack(pady=10)
 label_Bernoulli_result.pack()
 
 
